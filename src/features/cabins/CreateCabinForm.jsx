@@ -10,6 +10,8 @@ import { createCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
 import FormRow from "../../ui/FormRow";
 
+//This is the TEST
+
 function CreateCabinForm() {
   // Initialize the form using react-hook-form
   const {
