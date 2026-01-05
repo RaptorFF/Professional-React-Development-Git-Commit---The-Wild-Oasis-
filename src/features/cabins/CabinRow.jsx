@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
-import { deleteRow } from "../../services/apiCabins";
+import { deleteCabin } from "../../services/apiCabins";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useState } from "react";
@@ -62,7 +62,7 @@ function CabinRow({ cabin }) {
   const queryClient = useQueryClient();
 
   const { isPending: isDeleting, mutate } = useMutation({
-    mutationFn: (id) => deleteRow(id),
+    mutationFn: (id) => deleteCabin(id),
     onSuccess: () => {
       toast.success("Cabin deleted successfully");
 
@@ -83,7 +83,11 @@ function CabinRow({ cabin }) {
         <Cabin>{name}</Cabin>
         <div>Fits up to {maxCapacity} guests</div>
         <Price>{formatCurrency(regularPrice)}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
+        {discount ? (
+          <Discount>{formatCurrency(discount)}</Discount>
+        ) : (
+          <span>&mdash;</span>
+        )}
         <div>
           <button
             onClick={() => {

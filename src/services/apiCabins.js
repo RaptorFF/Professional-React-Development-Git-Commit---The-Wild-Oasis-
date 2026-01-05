@@ -5,16 +5,12 @@ export async function getCabins() {
 
   if (error) {
     console.error(error);
-    throw new Error("Cabins could not be loaded.");
+    throw new Error("Cabins could not be loaded");
   }
 
   return data;
 }
 
-// Function to create a new cabin in the database using Supabase;
-// accepts a newCabin object as input and returns the created cabin data;
-// newCabin object should contain necessary fields like name, maxCapacity, regularPrice,
-// discount, description, image, etc. same as defined in the database schema in supabase.
 export async function createEditCabin(newCabin, id) {
   const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
 
@@ -22,22 +18,17 @@ export async function createEditCabin(newCabin, id) {
     "/",
     ""
   );
-
   const imagePath = hasImagePath
     ? newCabin.image
-    : `${supabaseUrl}/storage/v1/object/public/cabins-images/${imageName}`;
-
-  //https://tppgusakbpaaclxsoiew.supabase.co/storage/v1/object/public/cabins-images/cabin-001.jpg
+    : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
   // 1. Create/edit cabin
   let query = supabase.from("cabins");
 
   // A) CREATE
-  // if no id is provided, we are creating a new cabin
   if (!id) query = query.insert([{ ...newCabin, image: imagePath }]);
 
   // B) EDIT
-  // if id is provided, we are editing an existing cabin
   if (id) query = query.update({ ...newCabin, image: imagePath }).eq("id", id);
 
   const { data, error } = await query.select().single();
@@ -51,7 +42,7 @@ export async function createEditCabin(newCabin, id) {
   if (hasImagePath) return data;
 
   const { error: storageError } = await supabase.storage
-    .from("cabins-images")
+    .from("cabin-images")
     .upload(imageName, newCabin.image);
 
   // 3. Delete the cabin IF there was an error uplaoding image
@@ -61,6 +52,17 @@ export async function createEditCabin(newCabin, id) {
     throw new Error(
       "Cabin image could not be uploaded and the cabin was not created"
     );
+  }
+
+  return data;
+}
+
+export async function deleteCabin(id) {
+  const { data, error } = await supabase.from("cabins").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Cabin could not be deleted");
   }
 
   return data;

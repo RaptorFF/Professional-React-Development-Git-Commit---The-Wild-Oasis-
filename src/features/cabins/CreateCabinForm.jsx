@@ -148,7 +148,6 @@ function CreateCabinForm({ editCabin = {} }) {
           required="This field is required"
           {...register("description")}
           defaultValue=""
-          disabled={isWorking}
         />
       </FormRow>
 
