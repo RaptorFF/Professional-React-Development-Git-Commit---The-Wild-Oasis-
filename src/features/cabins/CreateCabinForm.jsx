@@ -1,6 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
@@ -9,7 +7,8 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
 
-import { createEditCabin } from "../../services/apiCabins";
+import { useCreateCabin } from "./useCreateCabin";
+import { useEditCabin } from "./useEditCabin";
 
 function CreateCabinForm({ editCabin = {} }) {
   // Destructure editCabin to separate id from the rest of the data
@@ -29,34 +28,10 @@ function CreateCabinForm({ editCabin = {} }) {
   // Extract errors from form state
   const { errors } = formState;
 
-  // Get the query client for invalidating queries
-  const queryClient = useQueryClient();
-
-  const { mutate: createCabinMutate, isPending: isCreating } = useMutation({
-    mutationFn: createEditCabin,
-    onSuccess: (data) => {
-      toast.success("Cabin created:", data);
-      // Invalidate and refetch cabins query to reflect the new cabin
-      queryClient.invalidateQueries({ queryKey: ["cabins"] });
-      reset(); // Reset the form after successful submission
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
-
-  const { mutate: editCabinMutate, isPending: isEditing } = useMutation({
-    mutationFn: ({ newCabinData, id }) => createEditCabin(newCabinData, id),
-    onSuccess: (data) => {
-      toast.success("Cabin successfully updated:", data);
-      // Invalidate and refetch cabins query to reflect the new cabin
-      queryClient.invalidateQueries({ queryKey: ["cabins"] });
-      reset(); // Reset the form after successful submission
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
+  // Use the custom hook for creating cabins
+  const { createCabinMutate, isCreating } = useCreateCabin();
+  // Use the custom hook for editing cabins
+  const { editCabinMutate, isEditing } = useEditCabin();
 
   // Determine if the form is currently working (creating or editing)
   const isWorking = isCreating || isEditing;
@@ -67,11 +42,18 @@ function CreateCabinForm({ editCabin = {} }) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
     if (isEditMode)
-      editCabinMutate({
-        newCabinData: { ...data, image: image },
-        id: editCabinId,
-      });
-    else createCabinMutate({ ...data, image: image });
+      editCabinMutate(
+        {
+          newCabinData: { ...data, image: image },
+          id: editCabinId,
+        },
+        { onSuccess: (data) => reset() } // Reset the form after successful submission, data is returned cabin and it's optional to use it here
+      );
+    else
+      createCabinMutate(
+        { ...data, image: image },
+        { onSuccess: (data) => reset() } // Reset the form after successful submission
+      );
   }
 
   // Handle form submission errors
