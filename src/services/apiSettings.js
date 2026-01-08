@@ -1,7 +1,7 @@
 import supabase from "./supabase";
 
 export async function getSettings() {
-  const { data, error } = await supabase.from("settings").select("*").single();
+  const { data, error } = await supabase.from("settings").select("*").single(); // There is only ONE row of settings in the table
 
   if (error) {
     console.error(error);
