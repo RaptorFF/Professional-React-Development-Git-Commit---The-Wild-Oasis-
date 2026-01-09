@@ -39,7 +39,7 @@ function CreateCabinForm({ editCabin = {} }) {
   // Handle form submission
   function onSubmit(data) {
     //console.log(data);
-    const image = typeof data.image === "string" ? data.image : data.image[0];
+    const image = typeof data.image === "string" ? data.image : data.image[0]; // Handle file input for image
 
     if (isEditMode)
       editCabinMutate(
@@ -51,7 +51,7 @@ function CreateCabinForm({ editCabin = {} }) {
       );
     else
       createCabinMutate(
-        { ...data, image: image },
+        { ...data, image: image }, // For create, just send the data with image
         { onSuccess: (data) => reset() } // Reset the form after successful submission
       );
   }

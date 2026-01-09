@@ -4,11 +4,11 @@ import { formatCurrency } from "../../utils/helpers";
 
 import CreateCabinForm from "./CreateCabinForm";
 import { useDeleteCabin } from "./useDeleteCabin";
+import { useCreateCabin } from "./useCreateCabin";
 // Icons imports for the buttons
 import { HiSquare2Stack } from "react-icons/hi2";
 import { HiTrash } from "react-icons/hi";
 import { HiPencil } from "react-icons/hi";
-import { useCreateCabin } from "./useCreateCabin";
 
 const TableRow = styled.div`
   display: grid;

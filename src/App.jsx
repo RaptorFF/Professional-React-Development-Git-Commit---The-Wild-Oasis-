@@ -30,6 +30,7 @@ function App() {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
+          {/* Wrap routes with AppLayout */}
           <Route element={<AppLayout />}>
             {/* Redirect root to /dashboard */}
             <Route index element={<Navigate replace to="dashboard" />} />

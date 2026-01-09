@@ -31,7 +31,7 @@ function AppLayout() {
       <Sidebar />
       <Main>
         <Container>
-          <Outlet />
+          <Outlet /> {/* Renders the matched child route component */}
         </Container>
       </Main>
     </AppLayoutStyle>
