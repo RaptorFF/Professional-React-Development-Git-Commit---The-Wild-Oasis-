@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { createPortal } from "react-dom";
+import { HiXMark } from "react-icons/hi2";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -48,3 +50,20 @@ const Button = styled.button`
     color: var(--color-grey-500);
   }
 `;
+
+function Modal({ children, onClose }) {
+  // Use React Portal to render modal outside the main DOM hierarchy
+  return createPortal(
+    <Overlay>
+      <StyledModal>
+        <Button onClick={onClose}>
+          <HiXMark />
+        </Button>
+        <div>{children}</div>
+      </StyledModal>
+    </Overlay>,
+    document.body // Render the modal in the body element
+  );
+}
+
+export default Modal;

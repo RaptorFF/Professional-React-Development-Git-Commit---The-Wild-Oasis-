@@ -10,7 +10,7 @@ import FormRow from "../../ui/FormRow";
 import { useCreateCabin } from "./useCreateCabin";
 import { useEditCabin } from "./useEditCabin";
 
-function CreateCabinForm({ editCabin = {} }) {
+function CreateCabinForm({ editCabin = {}, onCloseModal }) {
   // Destructure editCabin to separate id from the rest of the data
   const { id: editCabinId, ...editCabinData } = editCabin;
   // Determine if we are in edit mode based on the presence of editCabinId
@@ -52,7 +52,12 @@ function CreateCabinForm({ editCabin = {} }) {
     else
       createCabinMutate(
         { ...data, image: image }, // For create, just send the data with image
-        { onSuccess: (data) => reset() } // Reset the form after successful submission
+        {
+          onSuccess: (data) => {
+            reset();
+            onCloseModal?.(); // Close the modal if onCloseModal is provided
+          },
+        } // Reset the form after successful submission
       );
   }
 
@@ -62,7 +67,10 @@ function CreateCabinForm({ editCabin = {} }) {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit, onError)}
+      type={onCloseModal ? "modal" : "regular"}
+    >
       <FormRow label="Cabin name" errors={errors.name && errors.name.message}>
         <Input
           type="text"
@@ -151,6 +159,7 @@ function CreateCabinForm({ editCabin = {} }) {
         <Button
           variation="secondary"
           type="reset" /* Reset button to clear the form */
+          onClick={() => onCloseModal?.()} /* Close the modal on cancel -*/
         >
           Cancel
         </Button>
