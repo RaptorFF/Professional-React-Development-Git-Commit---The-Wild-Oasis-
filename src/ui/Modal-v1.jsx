@@ -1,9 +1,6 @@
-import styled from "styled-components";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
-import { cloneElement, createContext } from "react";
-import { useState } from "react";
-import { useContext } from "react";
+import styled from "styled-components";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -54,49 +51,19 @@ const Button = styled.button`
   }
 `;
 
-const ModalContext = createContext();
-
-function Modal({ children }) {
-  const [openName, setOpenName] = useState("");
-  const close = () => setOpenName("");
-  const open = setOpenName;
-
-  return (
-    <ModalContext.Provider value={{ openName, close, open }}>
-      {children}
-    </ModalContext.Provider>
-  );
-}
-
-function Open({ children, opens: opensWindowName }) {
-  const { open } = useContext(ModalContext);
-
-  // Cloning the child element (Button) to add onClick prop
-  return cloneElement(children, {
-    onClick: () => open(opensWindowName),
-  });
-}
-
-function Window({ children, name }) {
-  const { openName, close } = useContext(ModalContext);
-  //
-  if (name !== openName) return null;
-
-  // Use React Portal to render modal outside the main DOM hierarchy
+function Modal({ children, onClose }) {
   return createPortal(
     <Overlay>
       <StyledModal>
-        <Button onClick={close}>
+        <Button onClick={onClose}>
           <HiXMark />
         </Button>
-        <div>{cloneElement(children, { onCloseModal: close })}</div>
+
+        <div>{children}</div>
       </StyledModal>
     </Overlay>,
-    document.body // Render the modal in the body element
+    document.body
   );
 }
-
-Modal.Open = Open;
-Modal.Window = Window;
 
 export default Modal;
