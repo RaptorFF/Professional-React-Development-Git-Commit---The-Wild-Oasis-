@@ -4,6 +4,7 @@ import { HiXMark } from "react-icons/hi2";
 import { cloneElement, createContext } from "react";
 import { useState } from "react";
 import { useContext } from "react";
+import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -79,13 +80,15 @@ function Open({ children, opens: opensWindowName }) {
 
 function Window({ children, name }) {
   const { openName, close } = useContext(ModalContext);
-  //
+
+  const ref = useOutsideClick(close); // Attach ref to modal window
+
   if (name !== openName) return null;
 
   // Use React Portal to render modal outside the main DOM hierarchy
   return createPortal(
     <Overlay>
-      <StyledModal>
+      <StyledModal ref={ref}>
         <Button onClick={close}>
           <HiXMark />
         </Button>
