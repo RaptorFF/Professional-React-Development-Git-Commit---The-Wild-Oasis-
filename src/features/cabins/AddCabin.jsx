@@ -4,15 +4,17 @@ import CreateCabinForm from "./CreateCabinForm";
 
 function AddCabin() {
   return (
-    //Modal component manages its own state internally
-    <Modal>
-      <Modal.Open opens="cabin-form">
-        <Button>Add New Cabin</Button>
-      </Modal.Open>
-      <Modal.Window name="cabin-form">
-        <CreateCabinForm />
-      </Modal.Window>
-    </Modal>
+    <div>
+      {/* Modal component manages its own state internally */}
+      <Modal>
+        <Modal.Open opens="cabin-form">
+          <Button>Add New Cabin</Button>
+        </Modal.Open>
+        <Modal.Window name="cabin-form">
+          <CreateCabinForm />
+        </Modal.Window>
+      </Modal>
+    </div>
   );
 }
 

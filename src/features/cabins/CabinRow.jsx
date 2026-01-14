@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 
@@ -9,6 +8,8 @@ import { useCreateCabin } from "./useCreateCabin";
 import { HiSquare2Stack } from "react-icons/hi2";
 import { HiTrash } from "react-icons/hi";
 import { HiPencil } from "react-icons/hi";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 const TableRow = styled.div`
   display: grid;
@@ -61,7 +62,6 @@ function CabinRow({ cabin }) {
     description,
   } = cabin;
 
-  const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteCabinMutate } = useDeleteCabin();
   const { isCreating, createCabinMutate } = useCreateCabin();
 
@@ -92,22 +92,31 @@ function CabinRow({ cabin }) {
           <button disabled={isCreating} onClick={handleCreateDuplicate}>
             <HiSquare2Stack />
           </button>
-          <button
-            onClick={() => {
-              setShowForm((show) => !show);
-            }}
-          >
-            <HiPencil />
-          </button>
-          <button
-            onClick={() => deleteCabinMutate(cabinId)}
-            disabled={isDeleting}
-          >
-            <HiTrash />
-          </button>
+          <Modal>
+            <Modal.Open opens="edit">
+              <button>
+                <HiPencil />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="edit">
+              <CreateCabinForm editCabin={cabin} />
+            </Modal.Window>
+
+            <Modal.Open opens="delete">
+              <button>
+                <HiTrash />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="delete">
+              <ConfirmDelete
+                resourceName="cabin"
+                disabled={isDeleting}
+                onConfirm={() => deleteCabinMutate(cabinId)}
+              />
+            </Modal.Window>
+          </Modal>
         </div>
       </TableRow>
-      {showForm && <CreateCabinForm editCabin={cabin} />}
     </>
   );
 }
