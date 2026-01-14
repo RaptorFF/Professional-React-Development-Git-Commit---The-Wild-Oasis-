@@ -18,9 +18,11 @@ function CabinTable() {
         <div>Price</div>
         <div>Discount</div>
       </Table.Header>
-      {cabins.map((cabin) => (
-        <CabinRow cabin={cabin} key={cabin.id} />
-      ))}
+
+      <Table.Body
+        data={cabins} //data prop to pass cabins array
+        render={(cabin) => <CabinRow cabin={cabin} key={cabin.id} />} //render prop to render each cabin row
+      />
     </Table>
   );
 }

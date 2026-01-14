@@ -1,4 +1,3 @@
-import { use } from "react";
 import { createContext, useContext } from "react";
 import styled from "styled-components";
 
@@ -87,8 +86,11 @@ function Row({ children }) {
     </StyledRow>
   );
 }
-function Body({ children }) {
-  return <StyledBody>{children}</StyledBody>;
+// Body component to render table rows based on data and render function props
+function Body({ data, render }) {
+  if (!data.length) return <Empty>No data available at the moment.</Empty>;
+
+  return <StyledBody>{data.map(render)}</StyledBody>;
 }
 
 Table.Header = Header;
