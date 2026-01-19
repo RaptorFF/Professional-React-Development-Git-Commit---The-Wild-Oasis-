@@ -11,7 +11,6 @@ function CabinTable() {
   const [searchParams] = useSearchParams();
 
   // Show spinner while loading
-
   if (isLoading) return <Spinner />;
 
   const discountFilter = searchParams.get("discount") || "all"; // Get discount filter from URL params
@@ -24,6 +23,29 @@ function CabinTable() {
       return cabin.discount === 0;
     }
     return true; // "all" or no filter
+  });
+
+  //Sort cabins based on sortBy URL param
+  const sortBy = searchParams.get("sortBy") || "name-asc";
+
+  // Sort the filtered cabins array based on the selected sort option from URL params
+  filteredCabins.sort((a, b) => {
+    switch (sortBy) {
+      case "name-asc":
+        return a.name.localeCompare(b.name);
+      case "name-desc":
+        return b.name.localeCompare(a.name);
+      case "regular-price-asc":
+        return a.regularPrice - b.regularPrice;
+      case "regular-price-desc":
+        return b.regularPrice - a.regularPrice;
+      case "max-capacity-asc":
+        return a.maxCapacity - b.maxCapacity;
+      case "max-capacity-desc":
+        return b.maxCapacity - a.maxCapacity;
+      default:
+        return 0;
+    }
   });
 
   return (
