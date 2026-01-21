@@ -13,7 +13,7 @@ export function useBookings() {
       : { field: "status", value: filterValue };
 
   // SORTING
-  const sortByRaw = searchParams.get("sortBy" || "startDate-desc"); // Default sort by startDate descending
+  const sortByRaw = searchParams.get("sortBy") || "startDate-desc"; // Default sort by startDate descending
   const [field, direction] = sortByRaw.split("-");
   const sortBy = { field, direction };
 
