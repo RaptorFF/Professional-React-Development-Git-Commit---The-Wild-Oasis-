@@ -13,6 +13,7 @@ import PageNotFound from "./pages/PageNotFound.jsx";
 import Settings from "./pages/Settings.jsx";
 import Users from "./pages/Users.jsx";
 import AppLayout from "./ui/AppLayout.jsx";
+import Booking from "./pages/Booking.jsx";
 
 // Create a QueryClient instance for React Query with default options
 const queryClient = new QueryClient({
@@ -37,6 +38,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="account" element={<Account />} />
             <Route path="bookings" element={<Bookings />} />
+            <Route path="bookings/:bookingId" element={<Booking />} />
             <Route path="cabins" element={<Cabins />} />
             <Route path="settings" element={<Settings />} />
             <Route path="users" element={<Users />} />
