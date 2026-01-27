@@ -13,6 +13,7 @@ import Checkbox from "../../ui/Checkbox";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "../bookings/useBooking";
 import Spinner from "../../ui/Spinner";
+import { useCheckin } from "./useCheckin.js";
 
 const Box = styled.div`
   /* Box */
@@ -26,6 +27,7 @@ function CheckinBooking() {
   const [confirmedPaid, setConfirmedPaid] = useState(false); // New state for payment confirmation
 
   const moveBack = useMoveBack();
+  const { checkin, isCheckingIn } = useCheckin();
 
   const { booking, isLoading } = useBooking();
 
@@ -46,7 +48,10 @@ function CheckinBooking() {
     numNights,
   } = booking;
 
-  function handleCheckin() {}
+  function handleCheckin() {
+    if (!confirmedPaid) return; // Prevent check-in if not confirmed paid
+    checkin(bookingId);
+  }
 
   return (
     <>
@@ -62,7 +67,7 @@ function CheckinBooking() {
           checked={confirmedPaid}
           onChange={() => setConfirmedPaid((confirm) => !confirm)}
           id="confirm"
-          disabled={confirmedPaid}
+          disabled={confirmedPaid || isCheckingIn}
         >
           I confirm that {guests.fullName} is paid full amount of{" "}
           {formatCurrency(totalPrice)}
@@ -70,7 +75,10 @@ function CheckinBooking() {
       </Box>
 
       <ButtonGroup>
-        <Button onClick={handleCheckin} disabled={!confirmedPaid}>
+        <Button
+          onClick={handleCheckin}
+          disabled={!confirmedPaid || isCheckingIn}
+        >
           Check in booking #{bookingId}
         </Button>
         <Button variation="secondary" onClick={moveBack}>
