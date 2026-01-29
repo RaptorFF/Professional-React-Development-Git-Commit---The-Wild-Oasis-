@@ -8,8 +8,12 @@ export function useCheckin() {
   const navigate = useNavigate();
 
   const { mutate: checkin, isPending: isCheckingIn } = useMutation({
-    mutationFn: (bookingId) => {
-      return updateBooking(bookingId, { status: "checked-in", isPaid: true }); // Update status and isPaid in supabase
+    mutationFn: ({ bookingId, breakfast }) => {
+      return updateBooking(bookingId, {
+        status: "checked-in",
+        isPaid: true,
+        ...breakfast,
+      }); // Update booking status to 'checked-in' and mark as paid if breakfast is added
     },
     // data is the updated booking returned from the API
     onSuccess: (data) => {
