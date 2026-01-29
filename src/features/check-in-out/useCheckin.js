@@ -9,7 +9,7 @@ export function useCheckin() {
 
   const { mutate: checkin, isPending: isCheckingIn } = useMutation({
     mutationFn: (bookingId) => {
-      updateBooking(bookingId, { status: "checked-in", isPaid: true }); // Update status and isPaid in supabase
+      return updateBooking(bookingId, { status: "checked-in", isPaid: true }); // Update status and isPaid in supabase
     },
     // data is the updated booking returned from the API
     onSuccess: (data) => {

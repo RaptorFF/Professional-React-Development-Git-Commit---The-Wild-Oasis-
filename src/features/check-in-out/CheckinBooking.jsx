@@ -25,15 +25,15 @@ const Box = styled.div`
 
 function CheckinBooking() {
   const [confirmedPaid, setConfirmedPaid] = useState(false); // New state for payment confirmation
+  const { booking, isLoading } = useBooking();
+
+  useEffect(
+    () => setConfirmedPaid(booking?.isPaid ?? false), // Initialize based on booking data
+    [booking],
+  );
 
   const moveBack = useMoveBack();
   const { checkin, isCheckingIn } = useCheckin();
-
-  const { booking, isLoading } = useBooking();
-
-  useEffect(() => {
-    setConfirmedPaid(booking?.isPaid ?? false); // Initialize based on booking data
-  }, [booking]);
 
   if (isLoading) {
     return <Spinner />;
