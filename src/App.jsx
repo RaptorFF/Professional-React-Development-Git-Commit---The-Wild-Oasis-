@@ -15,6 +15,7 @@ import Users from "./pages/Users.jsx";
 import AppLayout from "./ui/AppLayout.jsx";
 import Booking from "./pages/Booking.jsx";
 import Checkin from "./pages/Checkin.jsx";
+import ProtectedRoute from "./ui/ProtectedRoute.jsx";
 
 // Create a QueryClient instance for React Query with default options
 const queryClient = new QueryClient({
@@ -33,7 +34,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* Wrap routes with AppLayout */}
-          <Route element={<AppLayout />}>
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
             {/* Redirect root to /dashboard */}
             <Route index element={<Navigate replace to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />

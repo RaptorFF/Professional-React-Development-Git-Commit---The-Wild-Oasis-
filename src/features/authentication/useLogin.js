@@ -10,6 +10,7 @@ export function useLogin() {
 
     onSuccess: (user) => {
       // user contains info about the logged-in user
+      console.log(user);
       navigate("/dashboard");
     },
     onError: (err) => {
