@@ -10,11 +10,11 @@ export function useLogin() {
     mutationFn: ({ email, password }) => loginApi({ email, password }),
 
     onSuccess: (user) => {
-      // user contains info about the logged-in user
-      console.log(user);
-      queryClient.setQueriesData(["user"], user); // setQueriesData to update the user query cache
+      // user contains info about the logged-in user and came from the loginApi function
+      //1. Store user data in the query cache
+      queryClient.setQueryData(["user"], user.user);
       //2. Redirect to the dashboard
-      navigate("/dashboard");
+      navigate("/dashboard", { replace: true }); // replace: true to prevent going back to login page
     },
     onError: (err) => {
       console.log("Login failed:", err.message);
