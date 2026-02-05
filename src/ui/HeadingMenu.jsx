@@ -3,6 +3,7 @@ import Logout from "../features/authentication/Logout";
 import ButtonIcon from "./ButtonIcon";
 import { HiOutlineUser } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import DarkModeTogle from "./DarkModeTogle";
 
 const StyledHeadingMenu = styled.ul`
   display: flex;
@@ -17,6 +18,9 @@ function HeadingMenu() {
         <ButtonIcon onClick={() => navigate("/account")}>
           <HiOutlineUser />
         </ButtonIcon>
+      </li>
+      <li>
+        <DarkModeTogle />
       </li>
       <li>
         <Logout />
