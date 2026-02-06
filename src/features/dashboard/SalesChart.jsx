@@ -58,11 +58,13 @@ const StyledSalesChart = styled(DashboardBox)`
 function SalesChart({ bookings = [], numDays }) {
   const { isDarkMode } = useDarkMode();
 
-  // Ensure we have data points for all days in the interval, even if there were no sales
+  // all dates from today to numDays ago
   const allDates = eachDayOfInterval({
     start: subDays(new Date(), numDays - 1),
     end: new Date(),
   });
+
+  // calculate total sales and extras sales for each date and return in format needed for recharts
   const data = allDates.map((date) => {
     return {
       label: format(date, "MMM dd"),
