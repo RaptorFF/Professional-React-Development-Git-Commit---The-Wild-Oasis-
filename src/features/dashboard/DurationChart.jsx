@@ -123,6 +123,7 @@ function prepareData(startData, stays) {
     );
   }
 
+  if (!Array.isArray(stays)) return [];
   const data = stays
     .reduce((arr, cur) => {
       const num = cur.numNights;
@@ -160,7 +161,7 @@ function DurationChart({ confirmedStays }) {
             cy="50%"
             paddingAngle={3}
           >
-            {startData.map((entry) => (
+            {data.map((entry) => (
               <Cell key={entry.duration} fill={entry.color} />
             ))}
           </Pie>
