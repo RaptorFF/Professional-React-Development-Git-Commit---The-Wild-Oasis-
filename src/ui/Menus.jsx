@@ -87,6 +87,8 @@ function Toggle({ id }) {
   const { openId, open, close, setPosition } = useContext(MenusContext);
 
   function handleClick(e) {
+    // to prevent the click event from bubbling up to the List component and triggering the useOutsideClick hook to close the menu immediately after opening it
+    e.stopPropagation();
     const rect = e.currentTarget.getBoundingClientRect();
     setPosition({
       x: window.innerWidth - rect.width - rect.x,
@@ -104,7 +106,7 @@ function Toggle({ id }) {
 
 function List({ id, children }) {
   const { openId, position, close } = useContext(MenusContext);
-  const ref = useOutsideClick(close);
+  const ref = useOutsideClick(close, false); // to close the menu when clicking outside of it false is passed as the second argument to prevent the useOutsideClick hook from listening for clicks when the menu is closed
 
   if (openId !== id) return null;
 
@@ -112,7 +114,7 @@ function List({ id, children }) {
     <StyledList ref={ref} position={position}>
       {children}
     </StyledList>,
-    document.body
+    document.body,
   );
 }
 
