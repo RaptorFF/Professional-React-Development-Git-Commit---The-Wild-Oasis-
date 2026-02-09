@@ -8,7 +8,8 @@
 
 **Links**
 
-- Project URL: https://filip-the-wild-oasis.netlify.app/login
+- Project URL(netlify): https://filip-the-wild-oasis.netlify.app/login
+- Project URL(vercel): https://the-wild-oasis-by-filip.vercel.app/login
 
 **What I learned**
 
