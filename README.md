@@ -1,8 +1,17 @@
-# React + Vite
+# The Wild Oasis
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+**The chalange**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Create React App "The Wild Oasis"
+
+**What I learned**
+
+- Supabase(Creating Database, Creating Tables, Relationships Between Tables, Adding Security Policies, Connecting Supabasse with React App);
+- React Query(Mutations, Displaying Toasts-Notifications, React Hook Form, Custom Hooks);
+- Building a Modal;
+- Authentication and Authorization on Supabase - Protecting Routes and Database;
+- Implementing the Dark Mode;
+- Displaying Charts with Recharts Library;
+- Deployment with Netlify and Vercel;
