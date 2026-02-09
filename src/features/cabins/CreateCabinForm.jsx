@@ -48,7 +48,7 @@ function CreateCabinForm({ editCabin = {}, onCloseModal }) {
           id: editCabinId,
         },
         {
-          onSuccess: (data) => {
+          onSuccess: () => {
             reset();
             onCloseModal?.();
           },
@@ -58,7 +58,7 @@ function CreateCabinForm({ editCabin = {}, onCloseModal }) {
       createCabinMutate(
         { ...data, image: image }, // For create, just send the data with image
         {
-          onSuccess: (data) => {
+          onSuccess: () => {
             reset();
             onCloseModal?.(); // Close the modal if onCloseModal is provided
           },
@@ -68,7 +68,7 @@ function CreateCabinForm({ editCabin = {}, onCloseModal }) {
 
   // Handle form submission errors
   function onError(errors) {
-    //console.log(errors);
+    console.log(errors);
   }
 
   return (
