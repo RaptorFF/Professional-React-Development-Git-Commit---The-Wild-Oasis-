@@ -13,7 +13,7 @@
 
 **What I learned**
 
-- Supabase(Creating Database, Creating Tables, Relationships Between Tables, Adding Security Policies, Connecting Supabasse with React App);
+- Supabase(Creating Database, Creating Tables, Relationships Between Tables, Adding Security Policies, Connecting Supabase with React App);
 - React Query(Mutations, Displaying Toasts-Notifications, React Hook Form, Custom Hooks);
 - Building a Modal;
 - Authentication and Authorization on Supabase - Protecting Routes and Database;
