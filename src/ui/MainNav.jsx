@@ -8,6 +8,8 @@ import {
 import { HiOutlineHomeModern } from "react-icons/hi2";
 import { AiOutlineSetting } from "react-icons/ai";
 
+import Uploader from "../data/Uploader";
+
 const NavList = styled.ul`
   display: flex;
   flex-direction: column;
@@ -88,6 +90,7 @@ function MainNav() {
           </StyledNavLink>
         </li>
       </NavList>
+      <Uploader />
     </nav>
   );
 }
